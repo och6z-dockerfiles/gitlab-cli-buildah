@@ -1,0 +1,22 @@
+FROM python:alpine
+
+RUN apk update \
+    && pip install --upgrade \
+    setuptools \
+    wheel \
+    pip
+
+RUN pip install --upgrade \
+    python-gitlab \
+    ipython \
+    && rm -rf /var/cache/apk/*
+
+WORKDIR /home
+
+ENTRYPOINT ["/bin/sh", "-c"]
+
+CMD ["ipython"]
+
+#buildah bud --no-cache --file Dockerfile.alpine --tag image-name:version .
+#buildah from --name container-name image-name:version
+#buildah run --terminal --user $(id -u):$(id -g) --volume /host-dir:/container-dir container-id /bin/sh
